@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Thumbnail SEO Analyzer</title>
+    <meta name="description" content="Analyze your YouTube thumbnails for SEO and CTR optimization. Get actionable suggestions to improve your video performance.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+    <style>
+        :root {
+            --primary: #ff0000;
+            --primary-dark: #cc0000;
+            --primary-light: #ff3333;
+            --secondary: #282828;
+            --light: #f9f9f9;
+            --dark: #0f0f0f;
+            --gray: #606060;
+            --gray-light: #e0e0e0;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --border-radius: 12px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+            
+            /* Light mode variables */
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #f9f9f9;
+            --header-bg: #ffffff;
+            --footer-bg: #282828;
+            --footer-text: #ffffff;
+        }
+
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: #f5f5f5;
+            --card-bg: #1e1e1e;
+            --header-bg: #1a1a1a;
+            --footer-bg: #0a0a0a;
+            --footer-text: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            outline: none;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--header-bg);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            font-weight: 500;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            z-index: 101;
+        }
+
+        .theme-toggle {
+            background: none;
+            color: var(--text-color);
+            font-size: 1.3rem;
+            margin-left: 15px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ8NDQ0NFREWFhURFRUYHSghGBolGxUVITEhJSkrMC4uFx81ODM4NygtLisBCgoKDg0OFQ8PFysdFR0rKy0tLi0tKysrKy0tKy0rLSsrLS0rLS0tLSstLSsrKy4tKyswLSsrKy0rLS0tKy4rK//AABEIAMIBAwMBEQACEQEDEQH/xAAbAAEBAQEBAQEBAAAAAAAAAAAAAQIDBAYFB//EADgQAQACAQEEBgcHBAMBAAAAAAABAgMRBBIUMQUVIVFhcQYyNEFTobETInJzgZOyUlSRkjNCQwf/xAAbAQEBAAMBAQEAAAAAAAAAAAAAAQIDBAUGB//EADQRAQABAwEDCQgCAgMAAAAAAAABAgMREgQTMRQVITIzUVJhgQU0QVNxkcHwcrEioaLR4f/aAAwDAQACEQMRAD8A/kjtaQAAQAFBAAAAAAAAAAAAAAAAAAAAUAAAABQQAAAAAAQAAAAAAAAAAAAAAAAAAAFAAAAAUEAAAAAAAAAAEAABQQFABAAAAAAUAAAAAAABQQAFBAAAAAAAAAABAUEBQAAAAAAQFAAAAAUEBQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATe/VMi9vdJljmDSe6TJmDSe4yaoNJ7jJmDSe4yZg0nuMmqDSf6TJqNLdxk1Qk690mTMESMlUAAAAAAAAAAAAAAAAAAAAiM9C1pNvJr1Zl1RZ005+L9HY9jiZ7W6mlw3JxL9KNgozxDVmV4ChiDpOAoYgzJwFDEHSvAUMQdJwFDEHScDQxB0nA0MQdLnn2GmhpgzL8badmiOTVXGHZYjLzaTHZLCmvPQ2XbM09McBm0AAAAAAAAAAAAAAAAAAN4qb1ohpvVYjDt2K1rqy9N6xWWu3Lv2iiKYw77PtG7Lspl4F2Ol7I25nqacHHGowccajEnHGowccajBxxqMHHGownHeRqMM5Nu1hNRh4MuXVquS9DZY6Uvii1NY5w49WJezNqK7bxuyJzGXg106apjuFYgAAAAAAAAAAAAAAAAO2yW0tPk5b/F6/s+cU5TaMvaltntFWZZxTa87tK2tb3VrWbWn9IdGuKYzLzdxVcqxREzPl0vbHR+1fAzft2Ycot+KG/mnafl1fY6v2r4Gb9uxym34oXmnafl1fY6v2r4Gb9uxym34oOadp+XV9jq/av7fN+3Y5Tb8ULzVtHy6vsdX7V/b5v27HKbfig5q2j5dX2Or9q+Bm/bscoo8UHNW0fLq+x1ftXwM3+ljlFvxQnNW0/Lq+x1ftXwM3+ljlFvxQc07T8ur7OG07PnxxrkxZaV/qtS0V/zyZU3qKuiJhpu+z71qM10TEecTj7vL9oVyWYw9mDL92YclUdL2LNf+OHk7/N12+rDxdp7SRsc4AAAAAACgAAAAAAAAA3g9aXLe6z1dh6qRitkyVx19a9opXzmdGMVRTGZ+DZVbquXIop4zOH9A6L6OxbPWuOkaa6b95j71575eXcuVXKs1Ps9l2W3stvTbj6z8ZnzfQx0Ti+L9GW7jvauV1+FeqcXxfobuO85XX4TqnF8b6G7jvOV3PCdU4vjfQ3cd5yuvwnVOL4v0N3Hecrr8J1Ti+N9Ddx3nK7nhOqcXxvobuO85Xc8J1Ti+N9Ddx3nK7nheHpHZKYtIrffi2usTowqp08HRZuzczqjD4D0o6Krs965ccbuPLMxNY5Uvpr2eExr2eEvQ2a9NdM01cYfMe19gpsVxdtxiir4d0+X1/D83ByZ1OWzwcu/zl1Wuq8nae0kbHOAAAAAAAAAAAAAAAAA3h9afJy3uL1Nh6r2dC+27P8Ajt/CzRd7Kp6Ow++WvrP9S+7vZ5j7KIYjLKstMLF5RMQu9PepiHXNjyY7buSt8dtIndvWaW0nlOk+4mJjiwoqorjNMxMeXSxvSMsQm9IYhN6RcQzOSRdMFbzITGH43pl27LTwzU0/1s6dk68/R4ftyI5NH8o/L5XBydlT5+zwc49/m6rXVeVtXaSNjnAAAAAAAAAAAAAAAAAaw+tPk5r3F6mw9V7ehPbdn/Hb+FnPd7Kr9+L0dh98tfWf6l91d5j7OHCsqzdKokrblPlIkcYf2PNsODa9nx49pxRliMdd23LJSd2O2to7YetNumumMvz6jaLuz3aqrNWOmfpP1h8V056E58GuTZZnasMds1iNNopHjWPW/Tt8HFc2aqnpp6YfR7H7ctXcUXv8Kv8AjPr8PX7vlLRzieyY1iYnnE9zne5E/FmUZOdlZGISX5Ppj7LX86n0s6dk6/o8P257tH8o/L5TBydtT56zwYj3+bptdV5W1dpI2OcAAAAAAAAAAAAAAAABrF60+TmvcXqbD1Xs6E9t2f8AHb+FnPd7Kr9+L0dh98tfWf6l91d5j7OHmiVbHaoxlq/KfKUI4w/tWx/8WP8ALp/GHsR1YfnF3tKvrLvE6cuxWvHe+P8ATfa+h41jap3dsmPu22aItmmfdvxymPNov27eMzxez7Kr2ymqItdNvuq4en/nq/nuvY859lhzvIyXD7xKn5Ppl7LX86n0s6dk6/o8L277tH8o/L5XBydtT56zwc49/m6bXVeVtPaSrY5wAAAAABQBQAAAAEABQBcfrT5OW9xensXVl7OhPbdn/Hb+FnPd7Kp6Ww++2vrP9S+6ycpeY+0peSJVsdaWGMw3efuz5SiRxh/XNr6Y2bYtnx5Npy1xx9nTSvO9/ux2Vrzl7ETEUxMvz3c13btVNEZ6Zfzv0h/+g7TtO9i2OJ2fFPZ9p/7Xjz/6uevaPC9vZPZNNOJuf5T3fB8pjwzNt60za0zrMzOszPm5KqsvftWcYe+tuyGt1YYmRXTBPMljU/K9MfZa/nU+lnTsnX9Hhe3fdo/lH5fKYOTtqfO2eDMe/wA3Ta6ry9p7SVbHOKAAACAoAIKoAAAAAAAAU9b9HLe4vT2Hqy9fQntuz/jt/Cznu9lU9HYffbX1n+pfdZeUvNfa0vIrY1WUJayT92Y7xHh2n7XNkm+bJfJblE3tNpiPdHg3TcmeLgo2ammZimMQ648UQ1zLrptxDrEI2RDWqKzMqOmzz2pLGeD8z0x9lr+dT6WdOydf0eF7d92j+Ufl8pg5O2p85Z4M19/m6bXVeZtXaNNrnAAAAAAABVQAAAAAAFQBK+t+jlvcXpbFwlcO0ThzY8sdv2d4tp3x74/xq1zTqpmnvdVF7c3qLvhnP/f+n2OTpKtqxatomto1iY5TDzN3MTieL7WNqtzRFdE5iXm6xjvZbuWvlkLHSUd5u5XlkL1jHebuV5ZCcfXvNEpyulesK95u5XllJ1jXvN3JyyE6xr3m7lOWQnWMd5u5TlkOmHpCNeyUmiWdG1RVOH5PpX0lGSMeCJiZrb7S+nunSYrHzmf8OvZLcxmuXge3troq0WKeMTmfLo6I/wB5+z8fByb6nk2eBT3+bptdV5u1do02OYFAAAAAAFAQAAAAAAABnXS3nDmvR0vQ2OqIiXHNLClsuy5Y9ryY9Yrad2edZ7a6rVRTV0zxare2XbPRRV0d3wXjsnh803cMucbvl++px2Tw+Zu4Ocb3l++px2Tw+Zu4Ocb3l++px2Tw+Zu4Ocb3l++px2Tw+Zu4Ocb3l++px2Tw+Zu4Ocb3l++px2Tw+Zu4Ocb3l++px2Tw+Zu4Ocbvl++qx0hljlbd8YjtN1T8TnK/Ef4zhzpbXtntme2ZntmZbJ4OeiqZnM8Xrw2jRqmHoWqoiGsfL9ZdNrqvN2ic1y02NAAAAAAAACgAAAgACKAmoOWflrHu+jXcjMN1mrTLzXvq1RDdXVlxlk5ZnMggAAAAAAADVZGdE4l1reeUe9jjMumK8Q9lI0iI7nREYjDkqnM5VWKgKAgCgAAACZAyBkDIGUDIi5ZFykyi5hmbIsPHmrpy5fRrmMM5zhy1YsDUQ1FNQNQNQNQNQNQNRDUWHqwV07Z5/RsphnPB6Isza1hUzDUCZUMqqZAyBkDIGQMpoMTQDQDQDQU0QwaKYNAxJuouEnHqLFMudtnhjiGeJhynZITRCZZ4PxTQZOD8TQpwfiaA4PxNAcH4mgOD8TQHB+JoDg/E0GTg/E0QmW67LEMopiDMutcEQvQTEtxRWGJXdEwaKYNANANBDQDQAAGhngDAGAAVdAwaC4NEMLEIyilYhJlupoN1jls3WTdNRuE3F1JuDcNRuJNw1G4k3DJuDcMm4Nw1G4k3DUbiTcNRuDcNRuF3TJuTQybs0VpqpTRk1zCaCYNFTCCAAAYAwCYUUAABRQU0RVRlENRCNlMLEMJl1W6Woq1zLoppa3GOW3Qu4al3axjNS7pqMRqXcr9iajdQfYmo3UJOJNRuYZnGupN0m4ak3abhqTdpNViWFVDMw2RLTVSzMM4c1dKaMmiYRWEpoMRUQAQAABQAAABVFEZQ1EIziFhjLfRDVYYVOqiHSsNUuqiHSIa8t8UrFTLKKW4qMtLdai4biippJomV0sTUMMTVE0szVcpNLM1MsdLNoZQ1V0udobIc1UMaNsOWuElk56oZ0VqlFYioggIAAACKKAACqirCMoWEbIahJdFDVWup1UOtIaqnXbdIhrdMQ1ECxDcQM8N1gMNqggxIyYmETDMwrGYZmBjhi0Moaq46HKW2HJU5tsOatmWTlqSVapRWEoqSCAgCAAogKAACqjJYRlCwNkNQxlvoaq11Ouh1o01Oq27QwdUNQMoWBk3ANwrAkViUWGZFZkSWZGDF2VLVc4OMtsOOpiW2HNWzLJy1IrVKKwRUQQEAAAf/2Q==');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+            max-width: 600px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary);
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            margin: 10px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button.secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-button.secondary:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 60px 0;
+            background-color: var(--bg-color);
+            transition: var(--transition);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: var(--border-radius);
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            padding: 80px 0;
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                        url('https://images.unsplash.com/photo-1536240478700-b869070f9279?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1602&q=80');
+            background-size: cover;
+            background-position: center;
+            transition: var(--transition);
+        }
+
+        .dark-mode .upload-section {
+            background: linear-gradient(rgba(30, 30, 30, 0.85), rgba(30, 30, 30, 0.85)), 
+                        url('https://images.unsplash.com/photo-1536240478700-b869070f9279?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1602&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+            color: var(--text-color);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .upload-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .upload-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        }
+
+        .upload-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .upload-option {
+            background-color: var(--bg-color);
+            border: 2px dashed var(--gray-light);
+            border-radius: var(--border-radius);
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upload-option:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .upload-option h3 {
+            margin-bottom: 15px;
+            color: var(--text-color);
+            font-size: 1.3rem;
+        }
+
+        .upload-option p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+
+        /* URL Input Container - Fixed Responsiveness */
+        .url-input-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-width: 0; /* Important for flexbox shrinking */
+        }
+
+        .url-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.1);
+        }
+
+        .url-submit {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            font-weight: bold;
+            transition: var(--transition);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .url-submit:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background-color: var(--bg-color);
+            transition: var(--transition);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 40px 30px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 20px;
+            color: var(--text-color);
+            font-size: 1.4rem;
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* Results Section */
+        .results-section {
+            padding: 80px 0;
+            background-color: var(--card-bg);
+            display: none;
+            transition: var(--transition);
+        }
+
+        .results-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .grade-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .grade-card {
+            background-color: var(--bg-color);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grade-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+        }
+
+        .grade-card.mobile::before {
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+        }
+
+        .grade-card.web::before {
+            background: linear-gradient(90deg, #2196f3, #03a9f4);
+        }
+
+        .grade-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .grade-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .grade-badge {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .grade-poor {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .grade-good {
+            background-color: var(--warning);
+            color: white;
+        }
+
+        .grade-great {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .grade-score {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .preview-card {
+            background-color: var(--bg-color);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .preview-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .preview-title {
+            margin-bottom: 20px;
+            color: var(--text-color);
+            font-size: 1.3rem;
+        }
+
+        .preview-image {
+            width: 100%;
+            max-width: 300px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: var(--transition);
+        }
+
+        .preview-image:hover {
+            transform: scale(1.03);
+        }
+
+        .suggestions-container {
+            background-color: var(--bg-color);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .suggestions-title {
+            margin-bottom: 25px;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .suggestion-list {
+            list-style: none;
+        }
+
+        .suggestion-item {
+            padding: 20px;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: var(--transition);
+        }
+
+        .suggestion-item:hover {
+            background-color: var(--card-bg);
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-icon {
+            color: var(--primary);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        /* Table Styles */
+        .breakdown-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 40px;
+            box-shadow: var(--shadow);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .breakdown-table th, .breakdown-table td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .breakdown-table th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .breakdown-table tr:hover {
+            background-color: var(--card-bg);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                        url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80');
+            background-size: cover;
+            background-position: center;
+            transition: var(--transition);
+        }
+
+        .dark-mode .testimonials {
+            background: linear-gradient(rgba(30, 30, 30, 0.85), rgba(30, 30, 30, 0.85)), 
+                        url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .testimonial-content {
+            margin-bottom: 20px;
+            font-style: italic;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .author-info h4 {
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 80px 0 30px;
+            transition: var(--transition);
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 0;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+
+            .hero {
+                padding: 80px 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .cta-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+                display: block;
+                margin: 10px auto;
+                width: 80%;
+                max-width: 250px;
+            }
+
+            .upload-options {
+                grid-template-columns: 1fr;
+            }
+
+            .grade-display {
+                grid-template-columns: 1fr;
+            }
+
+            .preview-container {
+                grid-template-columns: 1fr;
+            }
+
+            /* Fixed URL input container for mobile */
+            .url-input-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .url-input {
+                width: 100%;
+            }
+
+            .url-submit {
+                width: 100%;
+                padding: 15px;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 15px;
+            }
+
+            nav {
+                display: none;
+                width: 100%;
+                margin-top: 15px;
+            }
+
+            nav.active {
+                display: block;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .upload-container {
+                padding: 25px;
+            }
+
+            .feature-card, .testimonial-card {
+                padding: 25px 20px;
+            }
+
+            .suggestions-container {
+                padding: 25px;
+            }
+
+            .breakdown-table {
+                font-size: 0.9rem;
+                display: block;
+                overflow-x: auto;
+            }
+
+            .breakdown-table th, .breakdown-table td {
+                padding: 10px 15px;
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-subtitle {
+                font-size: 1rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .feature-card h3 {
+                font-size: 1.2rem;
+            }
+            
+            .grade-score {
+                font-size: 2rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-column h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .breakdown-table {
+                font-size: 0.8rem;
+            }
+            
+            .breakdown-table th, .breakdown-table td {
+                padding: 8px 10px;
+            }
+        }
+
+        /* Additional small screen fixes */
+        @media (max-width: 360px) {
+            .url-input-container {
+                gap: 10px;
+            }
+            
+            .url-submit {
+                font-size: 0.9rem;
+                padding: 12px 15px;
+            }
+            
+            .upload-option {
+                padding: 30px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html" class="logo">
+                    <svg class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 8L15 12L9 16V8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    VT Analyzer
+                </a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="index.html#upload">Analyze Now</a></li>
+                    <li>
+                        <button class="theme-toggle" id="themeToggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1>Optimize Your YouTube Thumbnails for Maximum CTR</h1>
+            <p>Upload your thumbnail and get instant analysis with actionable suggestions to improve click-through rates and video performance.</p>
+            <div>
+                <a href="#upload" class="cta-button">Analyze Your Thumbnail</a>
+                <a href="#how-it-works" class="cta-button secondary">How It Works</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container stats-container">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-number">15%</div>
+                <div class="stat-label">Average CTR Improvement</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-number">50K+</div>
+                <div class="stat-label">Creators Helped</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-image"></i>
+                </div>
+                <div class="stat-number">100K+</div>
+                <div class="stat-label">Thumbnails Analyzed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-number">4.9/5</div>
+                <div class="stat-label">User Rating</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section class="upload-section" id="upload">
+        <div class="container">
+            <h2 class="section-title">Upload Your Thumbnail</h2>
+            <p class="section-subtitle">Get instant feedback on how to optimize your YouTube thumbnails for better click-through rates</p>
+            <div class="upload-container">
+                <div class="upload-options">
+                    <div class="upload-option" id="dragDropArea">
+                        <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                        <h3>Drag & Drop</h3>
+                        <p>Drag your thumbnail image here</p>
+                    </div>
+                    <div class="upload-option" id="browseButton">
+                        <div class="upload-icon"><i class="fas fa-folder-open"></i></div>
+                        <h3>Browse Files</h3>
+                        <p>Select from your device</p>
+                    </div>
+                    <div class="upload-option">
+                        <div class="upload-icon"><i class="fas fa-link"></i></div>
+                        <h3>Paste URL</h3>
+                        <p>Enter image or YouTube video URL</p>
+                        <div class="url-input-container">
+                            <input type="text" class="url-input" id="urlInput" placeholder="Paste URL here...">
+                            <button class="url-submit" id="urlSubmit">Analyze</button>
+                        </div>
+                    </div>
+                </div>
+                <input type="file" id="fileInput" accept="image/*" style="display: none;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading Animation -->
+    <div class="loading" id="loadingIndicator">
+        <div class="spinner"></div>
+        <p>Analyzing your thumbnail...</p>
+    </div>
+
+    <!-- Results Section -->
+    <section class="results-section" id="resultsSection">
+        <div class="container results-container">
+            <h2 class="section-title">Analysis Results</h2>
+            
+            <div class="grade-display">
+                <div class="grade-card mobile">
+                    <div class="grade-title">
+                        <i class="fas fa-mobile-alt"></i> Mobile Grade
+                    </div>
+                    <div class="grade-badge grade-great" id="mobileGradeBadge">Great</div>
+                    <div class="grade-score" id="mobileScore">85/100</div>
+                </div>
+                <div class="grade-card web">
+                    <div class="grade-title">
+                        <i class="fas fa-desktop"></i> Web Grade
+                    </div>
+                    <div class="grade-badge grade-good" id="webGradeBadge">Good</div>
+                    <div class="grade-score" id="webScore">72/100</div>
+                </div>
+            </div>
+
+            <div class="preview-container">
+                <div class="preview-card">
+                    <h3 class="preview-title">Mobile Preview</h3>
+                    <img src="" alt="Mobile preview" class="preview-image" id="mobilePreview">
+                </div>
+                <div class="preview-card">
+                    <h3 class="preview-title">Web Preview</h3>
+                    <img src="" alt="Web preview" class="preview-image" id="webPreview">
+                </div>
+            </div>
+
+            <div class="suggestions-container">
+                <h3 class="suggestions-title">
+                    <i class="fas fa-lightbulb"></i> Top Suggestions
+                </h3>
+                <ul class="suggestion-list" id="suggestionList">
+                    <li class="suggestion-item">
+                        <span class="suggestion-icon"><i class="fas fa-text-height"></i></span>
+                        <span>Increase text size for better mobile readability</span>
+                    </li>
+                    <li class="suggestion-item">
+                        <span class="suggestion-icon"><i class="fas fa-adjust"></i></span>
+                        <span>Improve contrast between text and background</span>
+                    </li>
+                    <li class="suggestion-item">
+                        <span class="suggestion-icon"><i class="fas fa-smile"></i></span>
+                        <span>Consider adding a face with positive emotion</span>
+                    </li>
+                </ul>
+
+                <table class="breakdown-table">
+                    <thead>
+                        <tr>
+                            <th>Factor</th>
+                            <th>Score</th>
+                            <th>Weight</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody id="breakdownTable">
+                        <tr>
+                            <td>Readability</td>
+                            <td>18/20</td>
+                            <td>20%</td>
+                            <td>Text is clear but could be larger on mobile</td>
+                        </tr>
+                        <tr>
+                            <td>Contrast</td>
+                            <td>12/15</td>
+                            <td>15%</td>
+                            <td>Good contrast but could be improved</td>
+                        </tr>
+                        <tr>
+                            <td>Focal Point</td>
+                            <td>14/15</td>
+                            <td>15%</td>
+                            <td>Strong focal point draws attention</td>
+                        </tr>
+                        <tr>
+                            <td>File Size</td>
+                            <td>8/10</td>
+                            <td>10%</td>
+                            <td>Good file size for fast loading</td>
+                        </tr>
+                        <tr>
+                            <td>Aspect Ratio</td>
+                            <td>10/10</td>
+                            <td>10%</td>
+                            <td>Perfect 16:9 aspect ratio</td>
+                        </tr>
+                        <tr>
+                            <td>Color Saturation</td>
+                            <td>9/10</td>
+                            <td>10%</td>
+                            <td>Vibrant colors that stand out</td>
+                        </tr>
+                        <tr>
+                            <td>Branding</td>
+                            <td>4/5</td>
+                            <td>5%</td>
+                            <td>Consistent with your channel branding</td>
+                        </tr>
+                        <tr>
+                            <td>Face Emotion</td>
+                            <td>7/10</td>
+                            <td>10%</td>
+                            <td>No face detected - consider adding one</td>
+                        </tr>
+                        <tr>
+                            <td>CTA Clarity</td>
+                            <td>4/5</td>
+                            <td>5%</td>
+                            <td>Clear call-to-action</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">How Our Analyzer Helps You</h2>
+            <p class="section-subtitle">We analyze multiple factors to give you comprehensive feedback on your thumbnail performance</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Mobile Optimization</h3>
+                    <p>Get specific feedback on how your thumbnail appears on mobile devices where most viewers watch.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-search"></i></div>
+                    <h3>SEO Analysis</h3>
+                    <p>Understand how search algorithms interpret your thumbnail and improve discoverability.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>CTR Improvement</h3>
+                    <p>Actionable suggestions to increase your click-through rate and video performance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Creators Say</h2>
+            <p class="section-subtitle">Hear from YouTube creators who improved their performance with our tool</p>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "This tool helped me increase my CTR by 22% in just two weeks! The suggestions are practical and easy to implement."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JS</div>
+                        <div class="author-info">
+                            <h4>Jessica Smith</h4>
+                            <p>Tech Tutorials, 150K subscribers</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "I was struggling with low views despite great content. The thumbnail analyzer pinpointed exactly what was wrong with my thumbnails."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MR</div>
+                        <div class="author-info">
+                            <h4>Mike Rodriguez</h4>
+                            <p>Travel Vlogs, 85K subscribers</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "The mobile vs. web analysis is a game-changer. I never realized how different my thumbnails looked on phones!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SC</div>
+                        <div class="author-info">
+                            <h4>Sarah Chen</h4>
+                            <p>Cooking Channel, 220K subscribers</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>Thumbnail Analyzer</h3>
+                    <p>Optimize your YouTube thumbnails for better performance and higher click-through rates.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Home </a></li>
+                        <li><a href="about.html"><i class="fas fa-chevron-right"></i> About </a></li>
+                        <li><a href="#features"><i class="fas fa-chevron-right"></i> Features </a></li>
+                        <li><a href="how-to.html"><i class="fas fa-chevron-right"></i> How It Works </a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="privacy.html"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                        <li><a href="terms.html"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+                        <li><a href="disclaimer.html"><i class="fas fa-chevron-right"></i> Disclaimer</a></li>
+                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 YouTube Thumbnail SEO Analyzer. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('mainNav').classList.toggle('active');
+        });
+
+        // Dark/Light mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+
+        // File upload handling
+        const dragDropArea = document.getElementById('dragDropArea');
+        const browseButton = document.getElementById('browseButton');
+        const fileInput = document.getElementById('fileInput');
+        const urlInput = document.getElementById('urlInput');
+        const urlSubmit = document.getElementById('urlSubmit');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const resultsSection = document.getElementById('resultsSection');
+
+        // Drag and drop functionality
+        dragDropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dragDropArea.style.borderColor = 'var(--primary)';
+            dragDropArea.style.backgroundColor = 'var(--card-bg)';
+        });
+
+        dragDropArea.addEventListener('dragleave', () => {
+            dragDropArea.style.borderColor = 'var(--gray-light)';
+            dragDropArea.style.backgroundColor = 'var(--bg-color)';
+        });
+
+        dragDropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dragDropArea.style.borderColor = 'var(--gray-light)';
+            dragDropArea.style.backgroundColor = 'var(--bg-color)';
+            
+            if (e.dataTransfer.files.length) {
+                handleFileUpload(e.dataTransfer.files[0]);
+            }
+        });
+
+        // Browse button functionality
+        browseButton.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleFileUpload(e.target.files[0]);
+            }
+        });
+
+        // URL submit functionality
+        urlSubmit.addEventListener('click', () => {
+            const url = urlInput.value.trim();
+            if (url) {
+                handleUrlUpload(url);
+            } else {
+                alert('Please enter a valid URL');
+            }
+        });
+
+        // Handle file upload
+        function handleFileUpload(file) {
+            if (!file.type.match('image.*')) {
+                alert('Please upload an image file');
+                return;
+            }
+            
+            // Show loading indicator
+            loadingIndicator.style.display = 'block';
+            resultsSection.style.display = 'none';
+            
+            // Simulate analysis (in a real app, this would be actual analysis)
+            setTimeout(() => {
+                // Hide loading indicator
+                loadingIndicator.style.display = 'none';
+                
+                // Show results
+                resultsSection.style.display = 'block';
+                
+                // Set preview images
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('mobilePreview').src = e.target.result;
+                    document.getElementById('webPreview').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+                
+                // Scroll to results
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+                
+                // Update scores based on file (simulated)
+                updateScores(file);
+            }, 2000);
+        }
+
+        // Handle URL upload
+        function handleUrlUpload(url) {
+            // Show loading indicator
+            loadingIndicator.style.display = 'block';
+            resultsSection.style.display = 'none';
+            
+            // Simulate analysis (in a real app, this would fetch and analyze the image)
+            setTimeout(() => {
+                // Hide loading indicator
+                loadingIndicator.style.display = 'none';
+                
+                // Show results
+                resultsSection.style.display = 'block';
+                
+                // Set preview images (using placeholder in this demo)
+                document.getElementById('mobilePreview').src = 'https://via.placeholder.com/160x90/FF0000/FFFFFF?text=Mobile+Preview';
+                document.getElementById('webPreview').src = 'https://via.placeholder.com/320x180/FF0000/FFFFFF?text=Web+Preview';
+                
+                // Scroll to results
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+                
+                // Update scores based on URL (simulated)
+                updateScores(null, url);
+            }, 2000);
+        }
+
+        // Update scores based on analysis (simulated)
+        function updateScores(file, url) {
+            // In a real implementation, these values would come from the analysis
+            const mobileScore = Math.floor(Math.random() * 30) + 70; // 70-100
+            const webScore = Math.floor(Math.random() * 40) + 60; // 60-100
+            
+            // Update score displays
+            document.getElementById('mobileScore').textContent = `${mobileScore}/100`;
+            document.getElementById('webScore').textContent = `${webScore}/100`;
+            
+            // Update grade badges
+            const mobileGradeBadge = document.getElementById('mobileGradeBadge');
+            const webGradeBadge = document.getElementById('webGradeBadge');
+            
+            updateGradeBadge(mobileGradeBadge, mobileScore);
+            updateGradeBadge(webGradeBadge, webScore);
+            
+            // Update breakdown table with simulated data
+            updateBreakdownTable(mobileScore, webScore);
+            
+            // Update suggestions
+            updateSuggestions(mobileScore, webScore);
+        }
+
+        // Update grade badge based on score
+        function updateGradeBadge(badgeElement, score) {
+            badgeElement.className = 'grade-badge ';
+            
+            if (score >= 80) {
+                badgeElement.classList.add('grade-great');
+                badgeElement.textContent = 'Great';
+            } else if (score >= 50) {
+                badgeElement.classList.add('grade-good');
+                badgeElement.textContent = 'Good';
+            } else {
+                badgeElement.classList.add('grade-poor');
+                badgeElement.textContent = 'Poor';
+            }
+        }
+
+        // Update breakdown table with simulated data
+        function updateBreakdownTable(mobileScore, webScore) {
+            // This would be populated with actual analysis results
+            // For now, we'll just update a few values to show the concept
+            const breakdownTable = document.getElementById('breakdownTable');
+            const rows = breakdownTable.getElementsByTagName('tr');
+            
+            // Update readability score based on overall score
+            if (rows.length > 0) {
+                const readabilityCell = rows[0].getElementsByTagName('td')[1];
+                const readabilityScore = Math.min(20, Math.floor(mobileScore * 0.23));
+                readabilityCell.textContent = `${readabilityScore}/20`;
+            }
+            
+            // Update contrast score
+            if (rows.length > 1) {
+                const contrastCell = rows[1].getElementsByTagName('td')[1];
+                const contrastScore = Math.min(15, Math.floor(webScore * 0.2));
+                contrastCell.textContent = `${contrastScore}/15`;
+            }
+        }
+
+        // Update suggestions based on scores
+        function updateSuggestions(mobileScore, webScore) {
+            const suggestionList = document.getElementById('suggestionList');
+            suggestionList.innerHTML = '';
+            
+            const suggestions = [];
+            
+            if (mobileScore < 80) {
+                suggestions.push('Increase text size for better mobile readability');
+            }
+            
+            if (webScore < 75) {
+                suggestions.push('Improve contrast between text and background');
+            }
+            
+            if (mobileScore < 85 || webScore < 85) {
+                suggestions.push('Consider adding a face with positive emotion');
+            }
+            
+            if (suggestions.length === 0) {
+                suggestions.push('Your thumbnail is well optimized! Consider A/B testing variations.');
+            }
+            
+            // Add at most 3 suggestions
+            const topSuggestions = suggestions.slice(0, 3);
+            
+            topSuggestions.forEach(suggestion => {
+                const li = document.createElement('li');
+                li.className = 'suggestion-item';
+                li.innerHTML = `
+                    <span class="suggestion-icon"><i class="fas fa-lightbulb"></i></span>
+                    <span>${suggestion}</span>
+                `;
+                suggestionList.appendChild(li);
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    document.getElementById('mainNav').classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use - YouTube Thumbnail SEO Analyzer</title>
+    <meta name="description" content="Learn how to use our YouTube Thumbnail SEO Analyzer to optimize your thumbnails for maximum click-through rates and performance.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+    <style>
+        :root {
+            --primary: #ff0000;
+            --primary-dark: #cc0000;
+            --primary-light: #ff3333;
+            --secondary: #282828;
+            --light: #f9f9f9;
+            --dark: #0f0f0f;
+            --gray: #606060;
+            --gray-light: #e0e0e0;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --border-radius: 12px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+            
+            /* Light mode variables */
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #f9f9f9;
+            --header-bg: #ffffff;
+            --footer-bg: #282828;
+            --footer-text: #ffffff;
+        }
+
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: #f5f5f5;
+            --card-bg: #1e1e1e;
+            --header-bg: #1a1a1a;
+            --footer-bg: #0a0a0a;
+            --footer-text: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            outline: none;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--header-bg);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            font-weight: 500;
+            padding: 5px 0;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            z-index: 101;
+        }
+
+        .theme-toggle {
+            background: none;
+            color: var(--text-color);
+            font-size: 1.3rem;
+            margin-left: 15px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+            max-width: 600px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary);
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            margin: 10px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 80px 0;
+            background-color: var(--bg-color);
+            transition: var(--transition);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+            color: var(--text-color);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Process Steps - Fully Responsive */
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .process-step {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .process-step:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .step-number {
+            background-color: var(--primary);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .process-step:hover .step-number {
+            transform: scale(1.1);
+        }
+
+        .step-content {
+            flex: 1;
+            min-width: 0; /* Important for text wrapping */
+        }
+
+        .step-content h3 {
+            margin-bottom: 15px;
+            color: var(--text-color);
+            font-size: 1.5rem;
+        }
+
+        .step-content p {
+            color: var(--gray);
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .step-content ul {
+            margin: 15px 0 15px 20px;
+            color: var(--gray);
+        }
+
+        .step-content li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .step-image {
+            width: 100%;
+            max-width: 300px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .step-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* Analysis Factors Section */
+        .analysis-factors {
+            background-color: var(--card-bg);
+            padding: 80px 0;
+            transition: var(--transition);
+        }
+
+        .factors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .factor-card {
+            background-color: var(--bg-color);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .factor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .factor-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .factor-card h3 {
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .factor-card p {
+            color: var(--gray);
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .factor-weight {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* Grading Scale Section */
+        .grading-scale {
+            padding: 80px 0;
+            background-color: var(--bg-color);
+            transition: var(--transition);
+        }
+
+        .scale-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .scale-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            background-color: var(--bg-color);
+            transition: var(--transition);
+        }
+
+        .scale-item:hover {
+            transform: translateX(5px);
+        }
+
+        .scale-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .scale-poor {
+            background-color: var(--danger);
+        }
+
+        .scale-good {
+            background-color: var(--warning);
+        }
+
+        .scale-great {
+            background-color: var(--success);
+        }
+
+        .scale-range {
+            margin-left: auto;
+            font-weight: bold;
+            color: var(--text-color);
+            flex-shrink: 0;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 80px 0;
+            background-color: var(--card-bg);
+            transition: var(--transition);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            background-color: var(--bg-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .faq-item:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .faq-question {
+            padding: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-color);
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+
+        .faq-question:hover {
+            background-color: var(--card-bg);
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .faq-answer.active {
+            padding: 20px;
+            max-height: 500px;
+        }
+
+        .faq-toggle {
+            font-size: 1.2rem;
+            transition: var(--transition);
+            color: var(--primary);
+        }
+
+        .faq-toggle.active {
+            transform: rotate(45deg);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 80px 0 30px;
+            transition: var(--transition);
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .process-step {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 0;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+
+            .hero {
+                padding: 80px 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .cta-button {
+                padding: 12px 25px;
+                font-size: 1rem;
+                display: block;
+                margin: 10px auto;
+                width: 80%;
+                max-width: 250px;
+            }
+
+            /* Process Steps Mobile Layout */
+            .process-step {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+                padding: 25px;
+            }
+
+            .step-number {
+                align-self: center;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+
+            .step-image {
+                max-width: 100%;
+                order: -1; /* Move image above content on mobile */
+            }
+
+            .step-content {
+                width: 100%;
+            }
+
+            .step-content h3 {
+                font-size: 1.3rem;
+            }
+
+            .factors-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .factor-card {
+                padding: 25px 20px;
+            }
+
+            .scale-container {
+                padding: 25px;
+            }
+
+            .scale-item {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .scale-range {
+                margin-left: 0;
+                width: 100%;
+                text-align: right;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 15px;
+            }
+
+            nav {
+                display: none;
+                width: 100%;
+                margin-top: 15px;
+            }
+
+            nav.active {
+                display: block;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-subtitle {
+                font-size: 1rem;
+            }
+            
+            .process-step {
+                padding: 20px 15px;
+            }
+            
+            .step-number {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+            
+            .step-content h3 {
+                font-size: 1.2rem;
+            }
+            
+            .factor-card {
+                padding: 20px 15px;
+            }
+            
+            .factor-icon {
+                font-size: 2rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-column h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .faq-question {
+                padding: 15px;
+                font-size: 1rem;
+            }
+            
+            .scale-container {
+                padding: 20px 15px;
+            }
+        }
+
+        /* Additional small screen fixes */
+        @media (max-width: 360px) {
+            .process-step {
+                padding: 15px 10px;
+            }
+            
+            .step-content h3 {
+                font-size: 1.1rem;
+            }
+            
+            .step-content p, .step-content li {
+                font-size: 0.9rem;
+            }
+            
+            .factor-card {
+                padding: 15px 10px;
+            }
+            
+            .factor-icon {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Animation for step numbers */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .process-step:hover .step-number {
+            animation: pulse 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <a href="index.html" class="logo">
+                    <svg class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 8L15 12L9 16V8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    VT Analyzer
+                </a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="how-to.html">How It Works</a></li>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="index.html#testimonials">Testimonials</a></li>
+                    <li>
+                        <button class="theme-toggle" id="themeToggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>How Our Thumbnail Analyzer Works</h1>
+            <p>Learn about our analysis process and how to create thumbnails that drive more clicks and views.</p>
+            <a href="index.html#upload" class="cta-button">Analyze Your Thumbnail</a>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Our Analysis Process</h2>
+            <p class="section-subtitle">Follow these simple steps to optimize your YouTube thumbnails and improve your click-through rates</p>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Upload Your Thumbnail</h3>
+                        <p>Start by uploading your YouTube thumbnail image using one of our convenient methods:</p>
+                        <ul>
+                            <li><strong>Drag & Drop:</strong> Simply drag your image file to the upload area</li>
+                            <li><strong>Browse Files:</strong> Select an image from your device</li>
+                            <li><strong>Paste URL:</strong> Enter the URL of your image or YouTube video</li>
+                        </ul>
+                        <p>Our system accepts common image formats including JPG, PNG, and WebP with a maximum file size of 10MB.</p>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Upload thumbnail" class="step-image">
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Advanced Image Analysis</h3>
+                        <p>Our system performs a comprehensive analysis of your thumbnail using multiple computer vision and machine learning techniques:</p>
+                        <ul>
+                            <li><strong>Text detection and readability assessment</strong> - Measures text size, clarity, and placement</li>
+                            <li><strong>Color contrast and saturation analysis</strong> - Evaluates visual appeal and accessibility</li>
+                            <li><strong>Focal point and composition evaluation</strong> - Identifies the main point of interest</li>
+                            <li><strong>Face detection and emotion recognition</strong> - Analyzes human elements and expressions</li>
+                            <li><strong>File size and compression optimization</strong> - Ensures fast loading times</li>
+                        </ul>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Analysis process" class="step-image">
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Generate Scores & Recommendations</h3>
+                        <p>Based on the analysis, we generate separate scores for mobile and web viewing experiences. Each factor is weighted according to its importance for YouTube thumbnail performance.</p>
+                        <p>You receive actionable suggestions to improve your thumbnail's click-through rate, with specific guidance on what to change and why it matters.</p>
+                        <p>Our recommendations are based on extensive research into YouTube's algorithm and viewer behavior patterns.</p>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Results and recommendations" class="step-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analysis Factors Section -->
+    <section class="analysis-factors">
+        <div class="container">
+            <h2 class="section-title">What We Analyze</h2>
+            <p class="section-subtitle">Our comprehensive analysis covers multiple factors that influence thumbnail performance</p>
+            
+            <div class="factors-grid">
+                <div class="factor-card">
+                    <div class="factor-icon"><i class="fas fa-text-height"></i></div>
+                    <h3>Readability</h3>
+                    <p>Measures how easily text can be read, especially on mobile devices. Considers font size, style, and placement.</p>
+                    <div class="factor-weight">Weight: 20%</div>
+                </div>
+                
+                <div class="factor-card">
+                    <div class="factor-icon"><i class="fas fa-adjust"></i></div>
+                    <h3>Contrast</h3>
+                    <p>Evaluates the color contrast between text and background to ensure visibility across different screens.</p>
+                    <div class="factor-weight">Weight: 15%</div>
+                </div>
+                
+                <div class="factor-card">
+                    <div class="factor-icon"><i class="fas fa-bullseye"></i></div>
+                    <h3>Focal Point</h3>
+                    <p>Identifies the main point of interest and evaluates if it's positioned optimally to draw viewer attention.</p>
+                    <div class="factor-weight">Weight: 15%</div>
+                </div>
+                
+                <div class="factor-card">
+                    <div class="factor-icon"><i class="fas fa-file-image"></i></div>
+                    <h3>File Size</h3>
+                    <p>Checks if the image is optimized for fast loading without sacrificing quality.</p>
+                    <div class="factor-weight">Weight: 10%</div>
+                </div>
+                
+                <div class="factor-card">
+                    <div class="factor-icon"><i class="fas fa-crop-alt"></i></div>
+                    <h3>Aspect Ratio</h3>
+                    <p>Verifies the thumbnail uses the recommended 16:9 aspect ratio for YouTube.</p>
+                    <div class="factor-weight">Weight: 10%</div>
+                </div>
+                
+                <div class="factor-card">
+                    <div class="factor-icon"><i class="fas fa-palette"></i></div>
+                    <h3>Color Saturation</h3>
+                    <p>Assesses color vibrancy to ensure the thumbnail stands out in YouTube's interface.</p>
+                    <div class="factor-weight">Weight: 10%</div>
+                </div>
+                
+                <div class="factor-card">
+                    <div class="factor-icon"><i class="fas fa-tag"></i></div>
+                    <h3>Branding</h3>
+                    <p>Evaluates consistency with your channel branding and recognition factors.</p>
+                    <div class="factor-weight">Weight: 5%</div>
+                </div>
+                
+                <div class="factor-card">
+                    <div class="factor-icon"><i class="fas fa-smile"></i></div>
+                    <h3>Face Emotion</h3>
+                    <p>Detects faces and analyzes emotional expressions that influence viewer engagement.</p>
+                    <div class="factor-weight">Weight: 10%</div>
+                </div>
+                
+                <div class="factor-card">
+                    <div class="factor-icon"><i class="fas fa-bullhorn"></i></div>
+                    <h3>CTA Clarity</h3>
+                    <p>Assesses how clearly the thumbnail communicates what the video is about.</p>
+                    <div class="factor-weight">Weight: 5%</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Grading Scale Section -->
+    <section class="grading-scale">
+        <div class="container">
+            <h2 class="section-title">Our Grading Scale</h2>
+            <p class="section-subtitle">Understand how we evaluate and score your thumbnails</p>
+            
+            <div class="scale-container">
+                <div class="scale-item">
+                    <div class="scale-color scale-great"></div>
+                    <div class="scale-label">Great</div>
+                    <div class="scale-range">80-100 points</div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-color scale-good"></div>
+                    <div class="scale-label">Good</div>
+                    <div class="scale-range">50-79 points</div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-color scale-poor"></div>
+                    <div class="scale-label">Poor</div>
+                    <div class="scale-range">0-49 points</div>
+                </div>
+            </div>
+            
+            <p style="text-align: center; margin-top: 30px; color: var(--gray);">
+                Thumbnails scoring 80+ are considered highly optimized for YouTube's platform and audience behavior.
+            </p>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p class="section-subtitle">Find answers to common questions about using our thumbnail analyzer</p>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How accurate is the analysis?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Our analysis is based on extensive research into YouTube thumbnail best practices and viewer behavior. While we can't guarantee specific CTR improvements, thumbnails that score highly in our system typically perform better based on our testing with thousands of thumbnails across multiple niches.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Do you store my thumbnails?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        We prioritize user privacy. Thumbnails are processed temporarily during analysis and are not stored on our servers unless you explicitly choose to save them for comparison purposes. You can read more in our <a href="privacy.html">Privacy Policy</a>.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I analyze multiple thumbnails?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes! You can analyze as many thumbnails as you like. Many creators use our tool to A/B test different thumbnail variations before publishing their videos. We recommend testing 2-3 variations to find the most effective option.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Why are mobile and web scores different?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Mobile and desktop viewers experience thumbnails differently due to screen size, context, and viewing behavior. Our analysis accounts for these differences to give you tailored recommendations for each platform. Mobile optimization is particularly important as over 70% of YouTube watch time comes from mobile devices.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is this tool completely free?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Yes, our basic thumbnail analysis is completely free. We may offer premium features in the future, but the core functionality will always remain free to use. Our mission is to help creators of all sizes improve their content performance.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>Thumbnail Analyzer</h3>
+                    <p>Optimize your YouTube thumbnails for better performance and higher click-through rates.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="how-to.html"><i class="fas fa-chevron-right"></i> How It Works</a></li>
+                        <li><a href="index.html#features"><i class="fas fa-chevron-right"></i> Features</a></li>
+                        <li><a href="index.html#testimonials"><i class="fas fa-chevron-right"></i> Testimonials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="privacy.html"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                        <li><a href="terms.html"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+                        <li><a href="disclaimer.html"><i class="fas fa-chevron-right"></i> Disclaimer</a></li>
+                        <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 YouTube Thumbnail SEO Analyzer. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('mainNav').classList.toggle('active');
+        });
+
+        // Dark/Light mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+
+        // FAQ toggle functionality
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const toggle = question.querySelector('.faq-toggle');
+                
+                answer.classList.toggle('active');
+                toggle.classList.toggle('active');
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    document.getElementById('mainNav').classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
