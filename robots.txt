@@ -1,0 +1,81 @@
+# robots.txt for YouTube Thumbnail SEO Analyzer
+# Last Updated: October 2025
+
+User-agent: *
+Allow: /
+
+# Directories to disallow
+Disallow: /admin/
+Disallow: /includes/
+Disallow: /config/
+Disallow: /tmp/
+Disallow: /private/
+Disallow: /cgi-bin/
+Disallow: /logs/
+
+# Files to disallow
+Disallow: /search/
+Disallow: /?search=
+Disallow: /?filter=
+Disallow: /*.pdf$
+Disallow: /*.doc$
+Disallow: /*.docx$
+
+# Allow important pages and assets
+Allow: /css/
+Allow: /js/
+Allow: /images/
+Allow: /fonts/
+
+# Sitemap location
+Sitemap: https://vtanalyzer.site/sitemap.xml
+
+# Crawl delay (optional - adjust based on server capacity)
+# Crawl-delay: 10
+
+# Specific bot instructions
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /uploads/thumbnails/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Crawl-delay: 5
+
+User-agent: YandexBot
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+
+User-agent: Baiduspider
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Crawl-delay: 10
+
+# Block AI training bots (optional)
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+# Block scraping bots
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
